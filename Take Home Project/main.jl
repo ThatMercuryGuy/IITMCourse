@@ -15,4 +15,13 @@ round(mean(df.Humidity_))
 median(df.Visibility_km_)
 
 #Find Most Commonly Observed Wind Direction (i.e. Statistical Mode)
-mode(df.Wind_Direction_)
+using StatsBase
+mode(df.Wind_Direction_Compass_)
+
+#To Find the highest average temperature per group
+for i in groupby(df, :Weather_Condition)
+    println("$(i.Weather_Condition[1]): $(round(mean(i.Temperature_°C_), digits = 2))")
+end
+
+#Answer is clearly Widespread Dust: 39.48
+
