@@ -46,31 +46,6 @@ end
 
 println(output)
 
-using Clustering
-
-# Extract numerical features
-features = Matrix(df[:, [:Dew_Point, :Humidity, :Pressure, :Temperature, :Visibility]])'
-
-# Find initial centroids from Jan 1 and Jan 2, 2015
-initial_indices = findall(x -> x in ["01-Jan-2015", "02-Jan-2015"], df.Date)
-initial_centroids = features[:, initial_indices]
-
-# Perform K-means clustering with k=2
-result = kmeans!(features, initial_centroids, maxiter=0)
-
-# Add cluster assignments to original DataFrame
-df_clustered = copy(df)
-df_clustered.Cluster = assignments(result)
-
-# Get cluster statistics
-cluster_sizes = counts(result)
-cluster_centers = result.centers
-
-function showCluster(df_clustered, date)
-    # Select single row
-    df_clustered[df_clustered.Date .== "04-Jan-2015", :][!, ["Date", "Cluster"]]
-end
-
 using LinearAlgebra
 function distanceBetweenRows(init_date, final_date)
     # Get the DataFrameRow objects directly
@@ -85,3 +60,38 @@ function distanceBetweenRows(init_date, final_date)
 end
 
 distanceBetweenRows("01-Jan-2015", "12-Jan-2016")
+
+using Clustering
+function KMeansAlgorithm(iterations)
+    # Find initial centroids from Jan 1 and Jan 2, 2015
+    initial_centroids = data[:, findall(x -> x in ["01-Jan-2015", "02-Jan-2015"], df.Date)]
+
+
+    #= Perform K-means clustering with k=2 =#
+    result = kmeans!(data, initial_centroids, maxiter=iterations)
+
+    return result
+end
+
+function showCluster(df_clustered, date)
+    # Select single row
+    df_clustered[df_clustered.Date .== "04-Jan-2015", :][!, ["Date", "Cluster"]]
+end
+
+#No Centroid Shift
+results = KMeansAlgorithm(0)
+
+# Add cluster assignments to original DataFrame
+df_clustered = copy(df)
+df_clustered.Cluster = assignments(result) 
+
+#Find Clustering
+showCluster(df_clustered, "04-Jan-2015")
+
+#Run with 1 iteration to find new centroids
+results = KMeansAlgorithm(1)
+
+# Find Centroids
+result.centers
+
+
