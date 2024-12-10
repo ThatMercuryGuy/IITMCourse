@@ -1,4 +1,4 @@
-Date,Weather_Condition,Dew_Point (°C),Humidity (%),Pressure (hPa),Temperature (°C),Visibility (km),Wind_Direction (Compass),Rain_Presence
+Date,Weather_Condition,Dew_Point,Humidity,Pressure,Temperature,Visibility,Wind_Direction,Rain_Presence
 01-Jan-2015,Smoke,11.0,43.0,1016.0,21.0,1.0,NNW,0
 02-Jan-2015,Light Rain,15.0,100.0,1017.0,15.0,1.0,NE,1
 04-Jan-2015,Smoke,10.0,51.0,1019.0,18.0,1.0,NW,0
