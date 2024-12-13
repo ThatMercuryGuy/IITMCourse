@@ -75,7 +75,7 @@ end
 
 function showCluster(df_clustered, date)
     # Select single row
-    df_clustered[df_clustered.Date .== "04-Jan-2015", :][!, ["Date", "Cluster"]]
+    df_clustered[df_clustered.Date .== date, :][!, ["Date", "Cluster"]]
 end
 
 #No Centroid Shift
@@ -83,7 +83,7 @@ results = KMeansAlgorithm(0)
 
 # Add cluster assignments to original DataFrame
 df_clustered = copy(df)
-df_clustered.Cluster = assignments(result) 
+df_clustered.Cluster = assignments(results) 
 
 #Find Clustering
 showCluster(df_clustered, "04-Jan-2015")
@@ -92,6 +92,4 @@ showCluster(df_clustered, "04-Jan-2015")
 results = KMeansAlgorithm(1)
 
 # Find Centroids
-result.centers
-
-
+results.centers
